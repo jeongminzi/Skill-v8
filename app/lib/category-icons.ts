@@ -53,6 +53,13 @@ export function resolveCatIcon(
   categoryName: string,
   overrideMap: Record<string, string>,
 ): LucideIcon {
-  const key = overrideMap[categoryName] ?? DEFAULT_CAT_ICON_KEY[categoryName] ?? "image";
+  const key = resolveCatIconKey(categoryName, overrideMap);
   return getIconByKey(key);
+}
+
+export function resolveCatIconKey(
+  categoryName: string,
+  overrideMap: Record<string, string>,
+): string {
+  return overrideMap[categoryName] ?? DEFAULT_CAT_ICON_KEY[categoryName] ?? "image";
 }

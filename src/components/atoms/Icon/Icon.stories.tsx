@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { Icon } from './Icon';
+import { Icon, ICON_NAMES } from './Icon';
 
 const meta: Meta<typeof Icon> = {
   title: 'Atoms/Icon',
@@ -8,11 +8,12 @@ const meta: Meta<typeof Icon> = {
   argTypes: {
     name: { control: 'text' },
     size: { control: 'object' },
+    strokeWidth: { control: 'number' },
     filled: { control: 'boolean' },
     className: { control: 'text' },
   },
   // @spec-managed:end
-  args: { name: 'favorite', size: 24, filled: false },
+  args: { name: 'heart', size: 24, strokeWidth: 1.75, filled: false },
 };
 export default meta;
 
@@ -24,17 +25,17 @@ export const Default: Story = {};
 
 // @spec-managed:end
 
+export const Size16: Story = { args: { ...Default.args, size: 16 } };
+export const Size32: Story = { args: { ...Default.args, size: 32 } };
+export const Emphasis: Story = { args: { ...Default.args, strokeWidth: 2.25 } };
+
 export const Gallery: Story = {
   render: () => (
-    <div className="grid grid-cols-6 gap-3 text-center text-xs text-[var(--color-text-muted)]">
-      {[
-        'home', 'search', 'event', 'person', 'notifications', 'arrow_back',
-        'close', 'star', 'favorite', 'edit', 'delete', 'check_circle',
-        'add', 'tune', 'storefront', 'photo_camera', 'chat', 'settings',
-      ].map((n) => (
-        <div key={n} className="flex flex-col items-center gap-1 rounded-md border border-[var(--color-border-subtle)] p-3">
+    <div className="grid grid-cols-6 gap-3 text-center text-[11px] text-[var(--color-text-muted)]">
+      {ICON_NAMES.map((n) => (
+        <div key={n} className="flex flex-col items-center gap-1.5 rounded-md border border-[var(--color-border-subtle)] p-3">
           <Icon name={n} />
-          <span>{n}</span>
+          <span className="truncate w-full">{n}</span>
         </div>
       ))}
     </div>

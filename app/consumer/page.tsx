@@ -7,7 +7,11 @@ import {
   CheckCircle2, ImageIcon, Calendar, Clock, Search, SlidersHorizontal, ChevronDown,
 } from "lucide-react";
 import { useCategories, useHomeKeywords, matchesKeyword, useAds, useRefundMatrix, pickRefundRate, REFUND_PERIOD_LABELS, useCategoryIcons, useNoShowReports, type HomeKeyword } from "../lib/admin-store";
-import { resolveCatIcon } from "../lib/category-icons";
+import { resolveCatIcon, resolveCatIconKey } from "../lib/category-icons";
+import { IconButton } from "../../src/components/atoms/IconButton/IconButton";
+import { SearchBar } from "../../src/components/molecules/SearchBar/SearchBar";
+import { CategoryCircle } from "../../src/components/atoms/CategoryCircle/CategoryCircle";
+import { StudioCard } from "../../src/components/molecules/StudioCard/StudioCard";
 
 function BrandMark() {
   return (
@@ -929,10 +933,15 @@ export default function ConsumerApp() {
                   {showBack && (
                     <button onClick={goBack} aria-label="뒤로가기" className="text-gray-500 text-lg leading-none p-1">‹</button>
                   )}
-                  <button onClick={() => navigate("notifications")} className="text-gray-500 relative p-1">
-                    <Bell size={20} strokeWidth={1.5} />
-                    {(CONSUMER_NOTIFICATIONS.some(n => !n.read) || noShowReports.some(r => r.consumerName === userName)) && <span className="absolute top-0.5 right-0.5 w-2 h-2 bg-red-500 rounded-full" />}
-                  </button>
+                  <IconButton
+                    icon="notifications"
+                    ariaLabel="알림"
+                    variant="plain"
+                    tone="neutral"
+                    size="md"
+                    badgeDot={CONSUMER_NOTIFICATIONS.some(n => !n.read) || noShowReports.some(r => r.consumerName === userName)}
+                    onClick={() => navigate("notifications")}
+                  />
                 </div>
               </div>
             </div>
@@ -945,30 +954,13 @@ export default function ConsumerApp() {
           {screen === "home" && (
             <div className="pb-6">
               <div className="px-4 pt-2">
-                <div className="flex items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-4 py-3 focus-within:border-primary transition-colors">
-                  <Search size={16} strokeWidth={1.8} className="text-gray-400 shrink-0" />
-                  <input
-                    type="text"
-                    value={homeSearchInput}
-                    onChange={e => setHomeSearchInput(e.target.value)}
-                    onKeyDown={e => { if (e.key === "Enter") runHomeSearch(); }}
-                    placeholder="스튜디오·지역·키워드 검색"
-                    className="flex-1 bg-transparent text-sm outline-none placeholder:text-gray-400"
-                  />
-                  {homeSearchInput && (
-                    <button
-                      onClick={() => setHomeSearchInput("")}
-                      aria-label="검색어 지우기"
-                      className="shrink-0 text-gray-400 hover:text-gray-600"
-                    >✕</button>
-                  )}
-                  {homeSearchInput.trim() && (
-                    <button
-                      onClick={runHomeSearch}
-                      className="shrink-0 rounded-full bg-primary text-white text-xs font-medium px-3 py-1"
-                    >검색</button>
-                  )}
-                </div>
+                <SearchBar
+                  initialValue={homeSearchInput}
+                  placeholder="스튜디오·지역·키워드 검색"
+                  showSubmit={!!homeSearchInput.trim()}
+                  onChange={setHomeSearchInput}
+                  onSubmit={(v) => { setHomeSearchInput(v); runHomeSearch(); }}
+                />
 
                 {homeKeywords.length > 0 && (
                   <div className="no-scrollbar mt-3 flex items-center gap-2 overflow-x-auto pb-1">
@@ -1045,20 +1037,16 @@ export default function ConsumerApp() {
                 </div>
                 <div className="grid grid-cols-4 gap-3">
                   {HOME_CATEGORY_GRID.map(category => (
-                    <button
+                    <CategoryCircle
                       key={category.name}
+                      label={category.name}
+                      icon={resolveCatIconKey(category.name, categoryIcons)}
                       onClick={() => {
                         setCategoryCat(category.name);
                         setScreen("category");
                         setTab("category");
                       }}
-                      className="flex flex-col items-center gap-2"
-                    >
-                      <div className="flex h-14 w-14 items-center justify-center rounded-full border border-gray-200 bg-gray-50 text-gray-700">
-                        <category.Icon size={20} strokeWidth={1.7} />
-                      </div>
-                      <span className="text-[11px] font-medium text-gray-600">{category.name}</span>
-                    </button>
+                    />
                   ))}
                 </div>
               </div>
@@ -1075,42 +1063,18 @@ export default function ConsumerApp() {
                 </div>
                 <div className="no-scrollbar flex gap-3 overflow-x-auto px-4 pb-1">
                   {hotStudios.map((studio, index) => (
-                    <button
+                    <StudioCard
                       key={studio.id}
+                      name={studio.name}
+                      area={studio.area}
+                      rating={studio.rating}
+                      reviewCount={studio.reviews}
+                      pricePerHour={studio.price}
+                      hot={index < 3}
+                      tags={studio.tags.slice(0, 3)}
+                      layout="carousel"
                       onClick={() => openDetail(studio)}
-                      className="flex w-44 shrink-0 flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white text-left shadow-sm"
-                    >
-                      <div className="relative flex h-28 items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 text-gray-400">
-                        <ImageIcon size={28} strokeWidth={1.5} />
-                        {index < 3 && (
-                          <span className="absolute left-2 top-2 rounded-full bg-gray-900 px-2 py-0.5 text-[9px] font-semibold text-white">
-                            HOT
-                          </span>
-                        )}
-                      </div>
-                      <div className="flex flex-1 flex-col p-3">
-                        <p className="truncate text-sm font-semibold text-gray-900">{studio.name}</p>
-                        <div className="mt-1 flex items-center gap-1.5 min-w-0">
-                          <p className="truncate text-[11px] text-gray-400 min-w-0">{studio.area}</p>
-                          {studio.travelAvailable && (
-                            <span className="shrink-0 rounded-full border border-primary/30 bg-primary/5 px-1.5 py-0.5 text-[9px] font-medium text-primary">
-                              출장 가능
-                            </span>
-                          )}
-                        </div>
-                        {studio.tags.length > 0 && (
-                          <div className="mt-1 flex gap-1 flex-wrap">
-                            {studio.tags.slice(0, 3).map(t => (
-                              <span key={t} className="text-[10px] text-primary bg-primary/5 px-1.5 py-0.5 rounded-full">#{t}</span>
-                            ))}
-                          </div>
-                        )}
-                        <div className="mt-auto flex items-center justify-between pt-2 text-[11px] text-gray-500">
-                          <span>예약 {studio.paymentCount}건</span>
-                          <span className="text-yellow-500">★ {studio.rating}</span>
-                        </div>
-                      </div>
-                    </button>
+                    />
                   ))}
                 </div>
               </div>

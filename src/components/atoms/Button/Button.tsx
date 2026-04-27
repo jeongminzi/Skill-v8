@@ -63,7 +63,7 @@ export function Button({
       )}
     >
       {loading ? (
-        <Icon name="progress_activity" size={size === 'sm' ? 16 : 20} className="animate-spin" />
+        <Icon name="spinner" size={size === 'sm' ? 16 : 20} className="animate-spin" />
       ) : leadingIcon ? (
         <Icon name={leadingIcon} size={size === 'sm' ? 16 : 20} />
       ) : null}

@@ -2,30 +2,30 @@
 
 ## Description
 
-Material Symbols Rounded glyph rendered as a font character. Project-wide icon
-primitive — emoji and arbitrary unicode are forbidden by user policy. All
-icons resolve through this component so weight, size, and fill stay
-consistent.
+Centralized icon primitive — wraps `lucide-react`. Components and pages
+pass a stable string `name` so that swapping the underlying icon library
+(or aliasing names) is a one-file change.
 
 ## Props
 
-| Name      | Type                                  | Required | Default | Description |
-|-----------|---------------------------------------|----------|---------|-------------|
-| name      | string                                | yes      | —       | Material Symbols ligature name (e.g. `home`, `favorite`). |
-| size      | 16 \| 18 \| 20 \| 24 \| 32            | no       | 20      | Glyph size in pixels — matches the design ramp. |
-| filled    | boolean                               | no       | false   | Toggles the filled axis via `font-variation-settings`. |
-| className | string                                | no       | —       | Extra Tailwind classes for color or positioning. |
+| Name        | Type                          | Required | Default | Description |
+|-------------|-------------------------------|----------|---------|-------------|
+| name        | string                        | yes      | —       | Logical name (e.g. `bell`, `search`, `chevron_right`). Resolved via the internal map; unknown names fall back to `HelpCircle`. |
+| size        | 16 \| 18 \| 20 \| 24 \| 32    | no       | 20      | Icon size in pixels. |
+| strokeWidth | number                        | no       | 1.75    | Lucide stroke weight. Use 2.25 for emphasis on active states. |
+| filled      | boolean                       | no       | false   | Sets `fill="currentColor"` — used for selected/rated star, favorite heart. |
+| className   | string                        | no       | —       | Tailwind escape hatch (color, positioning). |
 
 ## Variants
 
-- **size** — 16, 18, 20, 24, 32. Larger sizes used for empty-states and CTA icons; 16/18 for inline copy.
-- **filled** — outlined (default) vs filled glyph. Selection states and active tabs use filled.
+- **size** — 16, 18, 20, 24, 32. Match the type ramp.
+- **strokeWidth** — 1.5 (default ish), 1.75 (default here), 2.25 (active emphasis).
 
 ## States
 
-Icons are decorative (`aria-hidden`); state is owned by the parent control.
+Decorative; state is owned by the parent control.
 
 ## Accessibility
 
-- Always `aria-hidden`. If the icon conveys meaning, the parent must supply `aria-label` text.
-- Color contrast comes from the wrapping component, not the Icon itself.
+- Always `aria-hidden`. If the icon conveys meaning, the parent must supply `aria-label`.
+- Color and contrast inherited from the wrapping component.

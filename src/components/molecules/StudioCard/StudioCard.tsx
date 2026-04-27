@@ -59,7 +59,7 @@ export function StudioCard({
       <div className="flex flex-col gap-1 p-3">
         <div className="line-clamp-1 text-sm font-semibold text-[var(--color-text-strong)]">{name}</div>
         <div className="flex items-center gap-1 text-[11px] text-[var(--color-text-muted)]">
-          <Icon name="location_on" size={16} className="text-[var(--color-text-subtle)]" />
+          <Icon name="location" size={16} className="text-[var(--color-text-subtle)]" />
           <span>{area}</span>
         </div>
         {(typeof rating === 'number' || typeof reviewCount === 'number') && (

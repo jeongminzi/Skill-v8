@@ -41,7 +41,7 @@ export const Sizes: Story = {
 };
 
 export const WithIcons: Story = {
-  args: { leadingIcon: 'storefront', trailingIcon: 'arrow_forward', children: '예약 가능 시간 보기' },
+  args: { leadingIcon: 'storefront', trailingIcon: 'forward', children: '예약 가능 시간 보기' },
 };
 
 export const Block: Story = {
