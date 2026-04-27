@@ -1,14 +1,11 @@
-@import "tailwindcss";
-
 /* ----------------------------------------------------------------
- * Pretendard — primary product font (memory: user_figma_preferences)
+ * @import declarations MUST come first (CSS spec).
+ * Pretendard — primary product font.
+ * Material Symbols Rounded — icon font (no-emoji policy).
  * ---------------------------------------------------------------- */
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
-
-/* ----------------------------------------------------------------
- * Material Symbols Rounded — icon font (memory: feedback_no_emoji)
- * ---------------------------------------------------------------- */
 @import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&display=swap");
+@import "tailwindcss";
 
 @theme inline {
   /* === PRIMITIVE PALETTE ============================================
