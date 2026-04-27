@@ -1,103 +1,219 @@
 @import "tailwindcss";
 
+/* ----------------------------------------------------------------
+ * Pretendard — primary product font (memory: user_figma_preferences)
+ * ---------------------------------------------------------------- */
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
+
+/* ----------------------------------------------------------------
+ * Material Symbols Rounded — icon font (memory: feedback_no_emoji)
+ * ---------------------------------------------------------------- */
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&display=swap");
+
 @theme inline {
-  --color-primary: #e85d93;
-  --color-primary-light: #fce3ec;
-  --color-primary-dark: #c43c74;
-  --color-primary-bg: #fff4f8;
-  --color-warning: #F59E0B;
-  --color-warning-light: #FEF3C7;
-  --color-danger: #EF4444;
-  --color-success: #10B981;
+  /* === PRIMITIVE PALETTE ============================================
+   * Gray (Cool Gray — Tailwind slate-tinted, per user preference)
+   * Brand (pink) + 4 mandatory semantic ramps (red/green/yellow/blue)
+   * ================================================================ */
+
+  /* Cool Gray */
+  --color-gray-0:   #ffffff;
+  --color-gray-50:  #f8fafc;
+  --color-gray-100: #f1f5f9;
+  --color-gray-200: #e2e8f0;
+  --color-gray-300: #cbd5e1;
+  --color-gray-400: #94a3b8;
+  --color-gray-500: #64748b;
+  --color-gray-600: #475569;
+  --color-gray-700: #334155;
+  --color-gray-800: #1e293b;
+  --color-gray-900: #0f172a;
+
+  /* Brand pink (Funni primary) */
+  --color-brand-50:  #fff4f8;
+  --color-brand-100: #fce3ec;
+  --color-brand-200: #f9c7d9;
+  --color-brand-300: #f49bbb;
+  --color-brand-400: #ee79a3;
+  --color-brand-500: #e85d93;
+  --color-brand-600: #d14a82;
+  --color-brand-700: #c43c74;
+  --color-brand-800: #9d2c5b;
+  --color-brand-900: #6f1f40;
+
+  /* Red */
+  --color-red-50:  #fef2f2;
+  --color-red-100: #fee2e2;
+  --color-red-300: #fca5a5;
+  --color-red-500: #ef4444;
+  --color-red-600: #dc2626;
+  --color-red-700: #b91c1c;
+
+  /* Green */
+  --color-green-50:  #f0fdf4;
+  --color-green-100: #dcfce7;
+  --color-green-300: #86efac;
+  --color-green-500: #22c55e;
+  --color-green-600: #16a34a;
+  --color-green-700: #15803d;
+
+  /* Yellow / Amber */
+  --color-yellow-50:  #fffbeb;
+  --color-yellow-100: #fef3c7;
+  --color-yellow-300: #fcd34d;
+  --color-yellow-500: #f59e0b;
+  --color-yellow-600: #d97706;
+  --color-yellow-700: #92400e;
+
+  /* Blue */
+  --color-blue-50:  #eff6ff;
+  --color-blue-100: #dbeafe;
+  --color-blue-300: #93c5fd;
+  --color-blue-500: #3b82f6;
+  --color-blue-600: #2563eb;
+  --color-blue-700: #1d4ed8;
+
+  /* === SEMANTIC LAYER =============================================
+   * Roles (background / surface / text / border / state).
+   * Components MUST use semantic tokens; only the palette references
+   * primitives. This is the layer screens consume.
+   * ================================================================ */
+
+  /* Background / surface */
+  --color-bg-app:        #fff7fa;
+  --color-bg-surface:    var(--color-gray-0);
+  --color-bg-subtle:     var(--color-gray-50);
+  --color-bg-muted:      var(--color-gray-100);
+
+  /* Text */
+  --color-text-strong:   var(--color-gray-900);
+  --color-text-default:  var(--color-gray-700);
+  --color-text-muted:    var(--color-gray-500);
+  --color-text-subtle:   var(--color-gray-400);
+  --color-text-inverse:  var(--color-gray-0);
+  --color-text-brand:    var(--color-brand-500);
+
+  /* Border */
+  --color-border-subtle: var(--color-gray-100);
+  --color-border-default:var(--color-gray-200);
+  --color-border-strong: var(--color-gray-300);
+  --color-border-brand:  var(--color-brand-500);
+
+  /* Brand role (alias) */
+  --color-primary:       var(--color-brand-500);
+  --color-primary-hover: var(--color-brand-600);
+  --color-primary-bg:    var(--color-brand-50);
+  --color-primary-light: var(--color-brand-100);
+  --color-primary-dark:  var(--color-brand-700);
+
+  /* Semantic state */
+  --color-success:       var(--color-green-500);
+  --color-success-bg:    var(--color-green-50);
+  --color-success-fg:    var(--color-green-700);
+  --color-warning:       var(--color-yellow-500);
+  --color-warning-bg:    var(--color-yellow-100);
+  --color-warning-fg:    var(--color-yellow-700);
+  --color-danger:        var(--color-red-500);
+  --color-danger-bg:     var(--color-red-50);
+  --color-danger-fg:     var(--color-red-700);
+  --color-info:          var(--color-blue-500);
+  --color-info-bg:       var(--color-blue-50);
+  --color-info-fg:       var(--color-blue-700);
+
+  /* === RADIUS / SHADOW / SPACING ================================== */
+  --radius-xs:  4px;
+  --radius-sm:  8px;
+  --radius-md:  12px;
+  --radius-lg:  16px;
+  --radius-xl:  20px;
+  --radius-2xl: 28px;
+  --radius-pill: 999px;
+
+  --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.04), 0 4px 12px rgba(15, 23, 42, 0.06);
+  --shadow-pop:  0 8px 24px rgba(15, 23, 42, 0.12);
+
+  /* === TYPOGRAPHY ================================================= */
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+               system-ui, "Segoe UI", "Apple SD Gothic Neo", sans-serif;
 }
 
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: #fff7fa;
+html, body {
+  font-family: var(--font-sans);
+  background: var(--color-bg-app);
+  color: var(--color-text-default);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Material Symbols icon utility (memory: feedback_no_emoji — icons only via Material Symbols Rounded) */
+.material-symbols-rounded {
+  font-family: "Material Symbols Rounded";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-feature-settings: "liga";
+  -webkit-font-feature-settings: "liga";
   -webkit-font-smoothing: antialiased;
 }
 
-.policy-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  background: #FEF3C7;
-  border: 1px solid #F59E0B;
-  color: #92400E;
-  font-size: 10px;
-  font-weight: 600;
-  padding: 2px 8px;
-  border-radius: 999px;
-}
+.no-scrollbar::-webkit-scrollbar { display: none !important; }
+.no-scrollbar { -ms-overflow-style: none !important; scrollbar-width: none !important; }
+.overflow-x-auto::-webkit-scrollbar { display: none !important; }
+.overflow-x-auto { scrollbar-width: none !important; }
 
+/* ----------------------------------------------------------------
+ * Legacy ad-hoc classes — kept so existing prototype pages render
+ * unchanged. Phase 7 (migration) will fold these into components.
+ * ---------------------------------------------------------------- */
+.policy-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: var(--color-warning-bg);
+  border: 1px solid var(--color-warning);
+  color: var(--color-warning-fg);
+  font-size: 10px; font-weight: 600;
+  padding: 2px 8px; border-radius: var(--radius-pill);
+}
 .policy-area {
   position: relative;
-  border: 2px dashed #F59E0B;
-  border-radius: 12px;
+  border: 2px dashed var(--color-warning);
+  border-radius: var(--radius-md);
   background: rgba(245, 158, 11, 0.04);
   padding: 8px;
 }
-
 .badge-best {
-  background: #e85d93;
-  color: white;
-  font-size: 10px;
-  font-weight: 700;
-  padding: 2px 8px;
-  border-radius: 4px;
+  background: var(--color-primary); color: var(--color-text-inverse);
+  font-size: 10px; font-weight: 700;
+  padding: 2px 8px; border-radius: var(--radius-xs);
 }
-
 .badge-hot {
-  background: #EF4444;
-  color: white;
-  font-size: 10px;
-  font-weight: 700;
-  padding: 2px 8px;
-  border-radius: 4px;
+  background: var(--color-danger); color: var(--color-text-inverse);
+  font-size: 10px; font-weight: 700;
+  padding: 2px 8px; border-radius: var(--radius-xs);
 }
-
 .keyword-pill {
-  display: inline-flex;
-  align-items: center;
-  border: 1.5px solid #e85d93;
-  color: #e85d93;
-  font-size: 12px;
-  font-weight: 500;
-  padding: 4px 12px;
-  border-radius: 999px;
-  background: white;
-  white-space: nowrap;
+  display: inline-flex; align-items: center;
+  border: 1.5px solid var(--color-primary);
+  color: var(--color-primary);
+  font-size: 12px; font-weight: 500;
+  padding: 4px 12px; border-radius: var(--radius-pill);
+  background: var(--color-bg-surface); white-space: nowrap;
 }
-
 .cat-circle {
-  width: 56px;
-  height: 56px;
+  width: 56px; height: 56px;
   border-radius: 50%;
-  border: 2px solid #E5E7EB;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  background: white;
+  border: 2px solid var(--color-border-default);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; background: var(--color-bg-surface);
   transition: all 0.2s;
 }
 .cat-circle.active {
-  border-color: #e85d93;
-  background: #fff4f8;
-}
-
-.no-scrollbar::-webkit-scrollbar {
-  display: none !important;
-}
-.no-scrollbar {
-  -ms-overflow-style: none !important;
-  scrollbar-width: none !important;
-}
-
-/* Also target overflow-x-auto directly inside the app */
-.overflow-x-auto::-webkit-scrollbar {
-  display: none !important;
-}
-.overflow-x-auto {
-  scrollbar-width: none !important;
+  border-color: var(--color-primary);
+  background: var(--color-primary-bg);
 }
